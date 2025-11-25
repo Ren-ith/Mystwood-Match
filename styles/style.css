@@ -1,21 +1,25 @@
 /* -------------------------------------------------
    Global / Base
 ------------------------------------------------- */
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #020b24;
-    margin: 0;
-}
 :root {
   --card-min: 84px;
   --card-max: 160px;
   --card-w: clamp(var(--card-min), 12vw, var(--card-max));
   --card-radius: 15px;
 }
-img {
-    -webkit-user-drag: none;
+
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #020b24;
+  margin: 0;
+  overflow: auto; /* allow scrolling */
 }
+
+img {
+  -webkit-user-drag: none;
+}
+
 /* small readability boosts */
 h1,
 .start-content .title,
@@ -24,76 +28,78 @@ h1,
   text-wrap: balance;
 }
 
-
 /* -------------------------------------------------
    Text & Headings
 ------------------------------------------------- */
 h1 {
-    color: rgb(186, 168, 204);
-    font-size: clamp(28px, 6vw, 50px);  /* scales between 28px–50px */
-    margin: 0;
+  color: rgb(186, 168, 204);
+  font-size: clamp(28px, 6vw, 50px);
+  margin: 0;
 }
 
 #timer {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(18px, 4vw, 28px);
-    font-weight: bold;
-    margin-top: 5px;
-    color: white;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(18px, 4vw, 28px);
+  font-weight: bold;
+  margin-top: 5px;
+  color: white;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
 }
 
 .start-content .title,
 .end-content .title {
-    font-size: clamp(32px, 8vw, 64px);
-    font-family: 'Georgia', serif;
-    text-shadow: 0 0 15px #fff4cc;
+  font-size: clamp(32px, 8vw, 64px);
+  font-family: 'Georgia', serif;
+  text-shadow: 0 0 15px #fff4cc;
 }
 
 .start-content .tagline,
 .end-content .tagline {
-    font-size: clamp(14px, 4.5vw, 24px);
-    color: #ccc;
-    margin-top: 10px;
-    margin-bottom: 30px;
+  font-size: clamp(14px, 4.5vw, 24px);
+  color: #ccc;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 
 .start-message {
-    font-size: clamp(20px, 6vw, 32px);
-    font-weight: bold;
-    color: rgb(172, 156, 189);
-    opacity: 0;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+  font-size: clamp(20px, 6vw, 32px);
+  font-weight: bold;
+  color: rgb(172, 156, 189);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
 }
 
 #victoryMessage {
-    font-size: clamp(28px, 8vw, 50px);
-    font-weight: bold;
-    color: gold;
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    z-index: 1000;
+  font-size: clamp(28px, 8vw, 50px);
+  font-weight: bold;
+  color: gold;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 1000;
 }
 
 .end-content .tagline {
-    font-size: clamp(14px, 4.5vw, 24px);
-    color: #ccc;
-    margin-top: 10px;
-    margin-bottom: 30px;
+  font-size: clamp(14px, 4.5vw, 24px);
+  color: #ccc;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 
 .lose-style {
-    color: #e06666;
+  color: #e06666;
 }
-/* ===== Mobile-friendly text + header layout ===== */
+
+/* -------------------------------------------------
+   Mobile-friendly header & text
+------------------------------------------------- */
 @media (max-width: 480px) {
   #header {
     display: flex;
     flex-direction: column;
-    align-items: stretch;    /* children take full width */
+    align-items: stretch;
     width: 100%;
     padding: 0 12px;
     gap: 6px;
@@ -101,7 +107,7 @@ h1 {
     margin-bottom: 14px;
   }
 
-  #header br { display: none; } /* kill <br> gaps */
+  #header br { display: none; }
 
   h1 {
     font-size: clamp(24px, 7vw, 34px);
@@ -111,21 +117,21 @@ h1 {
   #timer {
     font-size: clamp(14px, 4.5vw, 18px);
     text-shadow: 0 0 10px rgba(255,255,255,0.75);
-    text-align: center;       /* stays centered */
+    text-align: center;
   }
 
- 
   #gameBoard {
     column-gap: clamp(6px, 1.6vmin, 16px);
     row-gap: clamp(8px, 2vmin, 20px);
   }
 }
-/* === 360×800-ish portrait phones: Reset under timer on the right === */
+
+/* 360×800 portrait: reset under timer on the right */
 @media (max-width: 400px) and (orientation: portrait) {
   #header {
     display: flex !important;
     flex-direction: column !important;
-    align-items: stretch !important;   /* children can use full width */
+    align-items: stretch !important;
     width: 100%;
     padding: 0 10px;
     gap: 6px;
@@ -133,24 +139,20 @@ h1 {
     margin-bottom: 5px;
   }
 
-  /* remove manual <br> gaps inside the header */
   #header br { display: none !important; }
 
-  /* put Reset directly under the timer, flush right */
   #header #resetButton {
-    position: static !important;   /* cancel absolute */
+    position: static !important;
     top: auto !important;
     right: auto !important;
-    order: 3 !important;           /* BELOW the timer */
+    order: 3 !important;
     align-self: flex-end !important;
-    margin: -50px 8px 0 auto !important; /* nudge from edge */
+    margin: -50px 8px 0 auto !important;
     font-size: clamp(14px, 4.2vw, 18px);
     padding: 10px 14px;
     border-radius: 10px;
   }
 }
-
-
 
 /* Small tablets / large phones in landscape */
 @media (min-width: 481px) and (max-width: 768px) {
@@ -158,11 +160,12 @@ h1 {
   #timer { font-size: clamp(16px, 3.5vw, 22px); }
   #resetButton { font-size: clamp(14px, 3.2vw, 18px); padding: 10px 16px; }
 }
-/* ===== Landscape phones (short + wide) ===== */
+
+/* Landscape phones */
 @media (max-height: 480px) and (orientation: landscape) {
   #header {
     display: flex;
-    flex-direction: row;       /* spread title, timer, button in one line */
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 0 12px;
@@ -178,13 +181,11 @@ h1 {
     font-size: clamp(14px, 3.5vw, 18px);
   }
 
-  /* tighten board gaps so more cards fit horizontally */
   #gameBoard {
     column-gap: clamp(4px, 1.2vmin, 10px);
     row-gap: clamp(6px, 1.6vmin, 14px);
   }
 
-  /* scale down start/win/lose headings in landscape */
   .start-content .title,
   .end-content .title {
     font-size: clamp(20px, 6vw, 32px);
@@ -197,25 +198,45 @@ h1 {
   }
 }
 
-/* ------------------------------
-   Reset Button (Base = Desktop)
------------------------------- */
-#resetButton {
-  position: absolute;      /* top-right corner on wide screens */
-  top: 20px;
-  right: 20px;
-  padding: 12px 20px;
-  font-size: 18px;
-  cursor: pointer;
+/* -------------------------------------------------
+   Buttons (Reset / Pause / Start / Etc)
+------------------------------------------------- */
+#resetButton,
+#startButton,
+#playAgainWin,
+#tryAgainButton {
+  padding: 14px 28px;
+  font-size: 22px;
   background-color: #09335f;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  cursor: pointer;
   transition: background 0.3s ease;
 }
-#resetButton:hover {
-  background-color: #0056b3;
+
+#resetButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 18px;
+  padding: 12px 20px;
 }
+
+#resetButton:hover,
+#startButton:hover,
+#playAgainWin:hover,
+#tryAgainButton:hover,
+button:hover {
+  background-color: #125;
+}
+
+#startButton,
+#playAgainWin,
+#tryAgainButton {
+  animation: softPulse 2s infinite;
+}
+
 #pauseButton {
   position: fixed;
   top: 20px;
@@ -235,6 +256,7 @@ h1 {
 #pauseButton:hover {
   background-color: #0056b3;
 }
+
 @media (max-width: 500px) {
   #pauseButton {
     font-size: 0.85rem;
@@ -242,28 +264,23 @@ h1 {
   }
 }
 
-/* ------------------------------
-   Phones (Portrait)
------------------------------- */
+/* Phones (portrait): reset button layout tweak */
 @media (max-width: 480px) {
   #resetButton {
     position: static;
-    order: 3;                 /* ensures below timer */
-    align-self: flex-end;     /* ⬅️ push to right */
-    margin-left: auto;        /* backup alignment */
+    order: 3;
+    align-self: flex-end;
+    margin-left: auto;
     font-size: clamp(14px, 4.2vw, 18px);
     padding: 10px 14px;
     border-radius: 10px;
   }
-
 }
 
-/* ------------------------------
-   Phones (Landscape)
------------------------------- */
+/* Phones (landscape): reset inline */
 @media (max-height: 480px) and (orientation: landscape) {
   #resetButton {
-    position: static;        /* inline in row layout */
+    position: static;
     align-self: center;
     font-size: clamp(12px, 3vw, 16px);
     padding: 6px 10px;
@@ -272,9 +289,8 @@ h1 {
 }
 
 /* -------------------------------------------------
-   Layout Containers
+   Layout Containers & Board
 ------------------------------------------------- */
-/* Layout container */
 #gameContainer {
   display: flex;
   flex-direction: column;
@@ -283,115 +299,62 @@ h1 {
   min-height: 100vh;
 }
 
-/* Prevent scrolling */
-body {
-  overflow: hidden;
-  margin: 0;
-}
-
-/* Default board layout (for smaller decks) */
-/* Default game board (fallback flexbox layout for small decks) */
+/* Default game board */
 #gameBoard {
-  display: grid;
-  justify-content: center;
-  justify-items: center;
-  gap: clamp(10px, 1.5vmin, 20px);
-  grid-template-columns: repeat(auto-fit, minmax(var(--card-w), auto));
-  max-width: 100vw;
-  padding: 1vmin;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-
-/* Max layout: 8 columns by 4 rows */
-/* Max layout: 8 columns by 4 rows */
-.board-32 {
-  display: grid !important;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  gap: clamp(10px, 1.5vmin, 20px);
-  width: 100vw;
-  max-width: 100vw;
-  height: auto;
-  margin: 0 auto;
-  padding: 1vmin;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-/* Responsive card sizing */
-.board-32 .card {
-  width: 100%;
-  aspect-ratio: 160 / 220;
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.board-32 .card-inner {
+  flex-wrap: wrap;                         /* 🔥 fill row horizontally, then wrap */
+  justify-content: center;                 /* center rows as a block */
+  align-content: flex-start;
+  gap: clamp(10px, 1.5vmin, 20px);         /* works with flex too */
+  max-width: 100vw;
   width: 100%;
-  height: 100%;
-}
-
-.board-32 .card img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  padding: 1vmin;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 
+/* 32-card board: same layout, but we can tweak sizing here if wanted */
+/* 32-card board: just tweak size, reuse flex from #gameBoard */
+.board-32 {
+  --card-w: clamp(72px, 10vw, 140px);  /* slightly smaller if you want 4 rows to fit better */
+  gap: clamp(10px, 1.5vmin, 20px);
+}
 
-#header {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-#particleCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 1500;
-}
-#header,
-#gameContainer,
-#victoryMessage {
-    position: relative;
-    z-index: 1500;
-}
-#header,
-#gameContainer { display: none; }
 
-/* -------------------------------------------------
-   Cards
-------------------------------------------------- */
+/* -----------------------------------------------
+   Card Sizing
+----------------------------------------------- */
 .card {
   width: var(--card-w);
   aspect-ratio: 8 / 11;
   perspective: 1000px;
   margin: 5px;
-  overflow: hidden;
   border-radius: var(--card-radius);
   border: none;
   box-sizing: border-box;
   position: relative;
   box-shadow: 0 10px 24px rgba(0,0,0,0.35);
 }
+
 .card::before {
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.04) inset,
     0 0 16px rgba(120,180,255,0.06) inset;
 }
+
 .card-inner {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.3s ease-in-out;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease-in-out;
 }
-.card.flipped .card-inner { transform: rotateY(180deg); }
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
 .card-front,
 .card-back {
   width: 100%;
@@ -403,7 +366,11 @@ body {
   align-items: center;
   justify-content: center;
 }
-.card-back { transform: rotateY(180deg); }
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
 .card img {
   max-width: 100%;
   max-height: 100%;
@@ -415,6 +382,7 @@ body {
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
 }
+
 .card:hover {
   box-shadow:
     0 2px 6px -2px rgba(255, 215, 150, 0.75),
@@ -425,14 +393,19 @@ body {
   transform: translateY(-2px);
   transition: box-shadow 0.35s ease, transform 0.35s ease;
 }
+
 .hidden { opacity: 0; }
+
 .matched {
-    opacity: 0;
-    transform: scale(0.8);
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    pointer-events: none;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
 }
-.slide-in { animation: slideIn 0.3s both; }
+
+.slide-in {
+  animation: slideIn 0.3s both;
+}
 
 /* Card size variants */
 .board--wide   { --card-w: clamp(84px, 11vw, 160px); }
@@ -440,145 +413,167 @@ body {
 .board--tiny   { --card-w: clamp(64px, 9vw, 120px); }
 
 /* -------------------------------------------------
-   Buttons
-------------------------------------------------- */
-#resetButton,
-#startButton,
-#playAgainWin,
-#tryAgainButton {
-    padding: 14px 28px;
-    font-size: 22px;
-    background-color: #09335f;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-#resetButton {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 18px;
-    padding: 12px 20px;
-}
-#startButton,
-#playAgainWin,
-#tryAgainButton { animation: softPulse 2s infinite; }
-button:hover,
-#startButton:hover,
-#playAgainWin:hover,
-#tryAgainButton:hover { background-color: #125; }
-
-/* -------------------------------------------------
    Screens (Start / Win / Lose)
 ------------------------------------------------- */
 #startScreen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url("../images/start.webp");
-    background-size: auto 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 2000;
-    transition: opacity 0.6s ease;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../images/start.webp");
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 2000;
+  transition: opacity 0.6s ease;
 }
+
 #startScreen::before,
 #winScreen::before,
 #loseScreen::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 1;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
 }
-.start-content { position: relative; z-index: 2; }
-#winScreen, #loseScreen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 3000;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
-    transition: opacity 0.8s ease;
+
+.start-content {
+  position: relative;
+  z-index: 2;
 }
+
+#winScreen,
+#loseScreen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  transition: opacity 0.8s ease;
+}
+
 #winScreen { background-image: url("../images/win.webp"); }
 #loseScreen { background-image: url("../images/lose.webp"); }
+
 #winScreen.visible,
-#loseScreen.visible { display: flex; opacity: 1; }
+#loseScreen.visible {
+  display: flex;
+  opacity: 1;
+}
+
 .end-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: gold;
-    animation: fadeIn 1.5s ease-out forwards;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: gold;
+  animation: fadeIn 1.5s ease-out forwards;
 }
 
 /* -------------------------------------------------
    Messages
 ------------------------------------------------- */
 #victoryMessage {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 50px;
-    font-weight: bold;
-    color: gold;
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    z-index: 1000;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  font-weight: bold;
+  color: gold;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 1000;
 }
+
 #startMessagePlaceholder {
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+/* -------------------------------------------------
+   Effects / Layers
+------------------------------------------------- */
+#header {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#particleCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1500;
+}
+
+#header,
+#gameContainer,
+#victoryMessage {
+  position: relative;
+  z-index: 1500;
+}
+
+/* Hidden until start */
+#header,
+#gameContainer {
+  display: none;
 }
 
 /* -------------------------------------------------
    Animations
 ------------------------------------------------- */
 @keyframes slideIn {
-    0% { opacity: 0; transform: translateY(50px); }
-    100%{ opacity: 1; transform: translateY(0); }
+  0% { opacity: 0; transform: translateY(50px); }
+  100%{ opacity: 1; transform: translateY(0); }
 }
+
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50%{ transform: scale(1.1); }
-    100%{ transform: scale(1); }
+  0% { transform: scale(1); }
+  50%{ transform: scale(1.1); }
+  100%{ transform: scale(1); }
 }
+
 @keyframes fadeIn { to { opacity: 1; } }
+
 @keyframes sparkle {
-    0% { transform: scale(1); opacity: 1; }
-    50%{ transform: scale(1.1); opacity: 0.8; }
-    100%{ transform: scale(1); opacity: 1; }
+  0% { transform: scale(1); opacity: 1; }
+  50%{ transform: scale(1.1); opacity: 0.8; }
+  100%{ transform: scale(1); opacity: 1; }
 }
+
 @keyframes softPulse {
-    0% { transform: scale(1); opacity: 1; }
-    50%{ transform: scale(1.05); opacity: 0.9; }
-    100%{ transform: scale(1); opacity: 1; }
+  0% { transform: scale(1); opacity: 1; }
+  50%{ transform: scale(1.05); opacity: 0.9; }
+  100%{ transform: scale(1); opacity: 1; }
 }
+
 @keyframes fadeInGlow {
-    0% {
-      opacity: 0; transform: scale(0.9);
-      box-shadow: 0 0 0px rgba(255, 255, 255, 0);
-    }
-    100% {
-      opacity: 1; transform: scale(1);
-      box-shadow: 0 0 20px rgba(255, 255, 200, 0.3);
-    }
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(255, 255, 200, 0.3);
+  }
 }
+
 .pulsing { animation: pulse 1.5s infinite; }
 .fade-in { opacity: 0; animation: fadeIn 1s forwards; }
 .sparkle { animation: sparkle 0.5s ease-out; }
