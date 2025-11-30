@@ -1,5 +1,5 @@
 // Setup
-const MAX_CARDS = 32; 
+const MAX_CARDS = 24; 
 let level = 1;
 let totalCards = 4;
 let matchedPairs = 0;
@@ -15,6 +15,8 @@ let totalMatchedAllLevels = 0;
 let bankedTime = 0;
 let isPaused = false;
 let pausedTime = 0;
+let endlessMode = false;
+let endlessBestLevel = 0;
 
 
 window.addEventListener('mousemove', e => {
@@ -146,13 +148,13 @@ function setupBoard() {
     card.className = "card";
     attachCardListeners(card, i);
 
-    card.innerHTML = `
+  card.innerHTML = `
       <div class="card-inner">
         <div class="card-front">
-          <img src="images/back.jpg" draggable="false" width="160" height="220">
+          <img src="images/back.jpg" draggable="false"> 
         </div>
         <div class="card-back">
-          <img id="image${i + 1}-back" width="160" height="220">
+          <img id="image${i + 1}-back"> 
         </div>
       </div>
     `;
@@ -219,12 +221,15 @@ function applyBoardDensity() {
   const board = document.getElementById("gameBoard");
   board.classList.remove("board--wide", "board--compact", "board--tiny");
 
-  if (totalCards >= 32) {
-    board.classList.add("board--tiny");       // 8×4 or beyond
-  } else if (totalCards >= 20) {
-    board.classList.add("board--compact");    // 5×4 to 6×4 zone
+  if (totalCards >= 20) {
+    // 20–24 cards
+    board.classList.add("board--tiny");
+  } else if (totalCards >= 12) {
+    // 12–18 cards
+    board.classList.add("board--compact");
   } else {
-    board.classList.add("board--wide");       // 4×2 to 4×4
+    // 4–10 cards
+    board.classList.add("board--wide");
   }
 }
 
@@ -337,10 +342,17 @@ function showGameWinScreen() {
 //level stuff
 function nextLevel() {
   if (timerInterval) clearInterval(timerInterval);
-  bankedTime = Math.max(0, Math.floor(timeLeft));
+
+  if (!endlessMode) {
+    bankedTime = Math.max(0, Math.floor(timeLeft));
+  } else {
+    bankedTime = 0; // timer is off, nothing to bank
+  }
 
   level++;
-  if (level > 20) {
+
+  // Normal mode stops at 20, Endless keeps going forever
+  if (!endlessMode && level > 20) {
     showGameWinScreen();
     return;
   }
@@ -371,14 +383,15 @@ function restartGame() {
     resetButton.onclick = restartGame;
   }
 
-  
   document.getElementById("header").style.display = "none";
   document.getElementById("gameContainer").style.display = "none";
 
-  
   const startScreen = document.getElementById("startScreen");
   startScreen.style.display = "flex";
   startScreen.style.opacity = "1";
+
+  // Do NOT touch endlessMode here – it stays whatever the button says
+  endlessBestLevel = 0;
 
   // Reset variables
   level = 1;
@@ -394,6 +407,25 @@ function restartGame() {
   boardLocked = false;
   bankedTime = 0;
 }
+
+
+const endlessButton = document.getElementById("endlessButton");
+
+endlessButton.addEventListener("click", () => {
+  endlessMode = !endlessMode;
+
+  if (endlessMode) {
+    endlessButton.classList.add("toggle-on");
+    endlessButton.classList.remove("toggle-off");
+    endlessButton.textContent = "Endless Mode: ON";
+  } else {
+    endlessButton.classList.remove("toggle-on");
+    endlessButton.classList.add("toggle-off");
+    endlessButton.textContent = "Endless Mode: OFF";
+  }
+});
+
+
 //timer stuff
 function baseTime(level) {
   return level <= 3 ? 60 : level <= 6 ? 45 : 40;
@@ -401,6 +433,13 @@ function baseTime(level) {
 
 function startTimer(resume = false) {
   if (timerInterval) clearInterval(timerInterval);
+
+  // 🔥 Endless Mode: no timer at all
+  if (endlessMode) {
+    removeTimer(); // hide / clear timer UI
+    return;
+  }
+
   if (isPaused) return;
 
   // Only compute timeLeft if we're NOT resuming
@@ -430,16 +469,25 @@ function startTimer(resume = false) {
 function updateTimerDisplay() {
   const timer = document.getElementById("timer");
   if (timer) {
+    timer.style.display = "";
     timer.innerHTML = `Time Left: ${timeLeft}s`;
   }
 }
 
+
 function removeTimer() {
   const timer = document.getElementById("timer");
-  if (timer) {
+  if (!timer) return;
+
+  if (endlessMode) {
+    // Hide timer completely in Endless
+    timer.style.display = "none";
+  } else {
+    timer.style.display = "";
     timer.innerHTML = "Time Left: --"; 
   }
 }
+
 //lose
 function handleGameOver() {
   clearInterval(timerInterval);
@@ -576,7 +624,7 @@ function cheatWin() {
   removeTimer();
 
   level = 20;
-  totalCards = 42;
+  totalCards = 24;
   matchedPairs = totalCards / 2;
 
   showVictoryAnimation();
